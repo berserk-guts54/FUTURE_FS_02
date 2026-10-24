@@ -1,0 +1,247 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A simple client lead management system to manage customer enquiries, lead status, and follow-up notes.">
+    <title>My Mini CRM | Lead Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+    <!-- Admin Login -->
+    <section id="loginScreen" class="login-screen">
+        <form id="loginForm" class="login-card">
+            <h1>My CRM</h1>
+            <p>Sign in to manage your client leads.</p>
+
+            <label for="adminEmail">Admin Email</label>
+            <input
+                type="email"
+                id="adminEmail"
+                placeholder="Enter admin email"
+                autocomplete="username"
+                required
+            >
+
+            <label for="adminPassword">Password</label>
+            <input
+                type="password"
+                id="adminPassword"
+                placeholder="Enter admin password"
+                autocomplete="current-password"
+                required
+            >
+
+            <p id="loginError" class="login-error" role="alert"></p>
+            <button type="submit" id="loginButton">Login</button>
+        </form>
+    </section>
+
+
+    <div class="container" id="appContainer" hidden>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>My CRM</h2>
+
+            <nav aria-label="Main navigation">
+                <ul>
+                    <li><a href="#dashboard">Dashboard</a></li>
+                    <li><a href="#leads">Leads</a></li>
+                    <li><a href="#addLead">Add Lead</a></li>
+                    <li><a href="#followups">Follow-up Notes</a></li>
+                    <li><a href="#settings">Settings</a></li>
+                </ul>
+            </nav>
+            <button type="button" id="logoutButton">Logout</button>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content" id="dashboard">
+
+            <header>
+                <h1>Client Lead Management System</h1>
+                <p>Manage your customer leads in one place.</p>
+            </header>
+
+            <!-- Dashboard Cards -->
+            <section class="dashboard-cards" aria-label="Lead statistics">
+
+                <div class="card">
+                    <h3>Total Leads</h3>
+                    <p id="totalLeads">0</p>
+                </div>
+
+                <div class="card">
+                    <h3>New Leads</h3>
+                    <p id="newLeads">0</p>
+                </div>
+
+                <div class="card">
+                    <h3>Contacted</h3>
+                    <p id="contactedLeads">0</p>
+                </div>
+
+                <div class="card">
+                    <h3>Converted</h3>
+                    <p id="convertedLeads">0</p>
+                </div>
+
+            </section>
+
+            <!-- All Leads -->
+            <section class="leads-section" id="leads">
+                <h2>All Leads</h2>
+
+                <label for="searchInput">Search Leads</label>
+                <input
+                    type="search"
+                    id="searchInput"
+                    placeholder="Search by name, email or phone"
+                >
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Enquiry</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="leadsTable">
+                            <!-- Sample lead -->
+                            <tr>
+                                <td>Rahul Das</td>
+                                <td>rahul@example.com</td>
+                                <td>9876543210</td>
+                                <td>Website Design</td>
+                                <td>
+                                    <select class="status" aria-label="Rahul Das lead status">
+                                        <option value="New" selected>New</option>
+                                        <option value="Contacted">Contacted</option>
+                                        <option value="Converted">Converted</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button type="button" class="viewBtn">View</button>
+                                    <button type="button" class="deleteBtn">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Add Lead -->
+            <section class="add-lead-section" id="addLead">
+                <h2>Add New Lead</h2>
+
+                <form id="leadForm">
+
+                    <label for="name">Customer Name</label>
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Enter customer name"
+                        autocomplete="name"
+                        required
+                    >
+
+                    <label for="email">Email Address</label>
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter email address"
+                        autocomplete="email"
+                        required
+                    >
+
+                    <label for="phone">Phone Number</label>
+                    <input
+                        type="tel"
+                        id="phone"
+                        placeholder="Enter phone number"
+                        autocomplete="tel"
+                        required
+                    >
+
+                    <label for="enquiry">Enquiry</label>
+                    <input
+                        type="text"
+                        id="enquiry"
+                        placeholder="What is the customer interested in?"
+                        required
+                    >
+
+                    <button type="submit">Add Lead</button>
+                </form>
+            </section>
+
+            <!-- Follow-up Notes -->
+            <section class="followup-section" id="followups">
+                <h2>Follow-up Notes</h2>
+
+                <form id="notesForm">
+
+                    <label for="leadSelect">Select Customer</label>
+                    <select id="leadSelect" required>
+                        <option value="">Choose a customer</option>
+                    </select>
+
+                    <label for="notes">Follow-up Notes</label>
+                    <textarea
+                        id="notes"
+                        rows="4"
+                        placeholder="Write follow-up details here"
+                        required
+                    ></textarea>
+
+                    <button type="submit">Save Notes</button>
+                </form>
+
+                <h3>Saved Notes</h3>
+
+                <div id="savedNotes" aria-live="polite">
+                    <p>No notes added yet.</p>
+                </div>
+            </section>
+
+            <!-- View Lead Details -->
+            <section id="leadDetails" class="lead-details" aria-live="polite">
+                <h2>Lead Details</h2>
+
+                <p id="detailName"></p>
+                <p id="detailEmail"></p>
+                <p id="detailPhone"></p>
+                <p id="detailEnquiry"></p>
+                <p id="detailStatus"></p>
+
+                <button type="button" id="closeDetails">Close</button>
+            </section>
+
+            <!-- Settings -->
+            <section class="leads-section" id="settings">
+                <h2>Settings</h2>
+                <p>Mini CRM frontend settings and account options will be added here later.</p>
+            </section>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <p>&copy; 2026 My Mini CRM. All rights reserved.</p>
+            </footer>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
